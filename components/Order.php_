@@ -1,0 +1,26 @@
+<?php
+
+class Order
+{
+	public static function save($userName, $userPhone, $userCountry, $userCity, $userAddress, $userIndex, $userComment, $userId, $productsInCart)
+	{
+		$db = Db::getConnection();
+
+		$sql = 'INSERT INTO orders (name, phone, country, city, address, index, comment, id, prod_name) VALUES (:name, :phone, :country, :city, :address, :index, :comment, :id, :prod_name)';
+		$result = $db->prepare($sql);
+		
+		$result->bindParam(':name', $userName, PDO::PARAM_STR);
+		$result->bindParam(':phone', $userPhone, PDO::PARAM_STR);
+		$result->bindParam(':country', $userCountry, PDO::PARAM_STR);
+		$result->bindParam(':city', $userCity, PDO::PARAM_STR);
+		$result->bindParam(':address', $userAddress, PDO::PARAM_STR);
+		$result->bindParam(':index', $userIndex, PDO::PARAM_STR);
+		$result->bindParam(':comment', $userComment, PDO::PARAM_STR);
+		$result->bindParam(':id', $userId, PDO::PARAM_STR);
+		$result->bindParam(':prod_name', $productsInCart, PDO::PARAM_STR);
+
+		$result->execute();
+
+		return true;
+	}
+}
